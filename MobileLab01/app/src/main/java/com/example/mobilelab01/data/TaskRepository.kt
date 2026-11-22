@@ -62,9 +62,20 @@ class TaskRepository private constructor(
         )
     }
 
-    suspend fun toggleCompleted(id: Long) = withContext(Dispatchers.IO) {
-        val task = taskDao.getById(id) ?: return@withContext
-        taskDao.update(task.copy(isCompleted = !task.isCompleted))
+    /**
+     * Переключает статус задачи. Уведомление о завершении нужно только если
+     * [TaskToggleResult.becameCompleted] == true (было false → стало true).
+     */
+    suspend fun toggleCompleted(id: Long): TaskToggleResult = withContext(Dispatchers.IO) {
+        val task = taskDao.getById(id) ?: return@withContext TaskToggleResult.NotFound
+        val wasCompleted = task.isCompleted
+        val newCompleted = !wasCompleted
+        taskDao.update(task.copy(isCompleted = newCompleted))
+        TaskToggleResult.Success(
+            taskId = task.id,
+            taskTitle = task.title,
+            becameCompleted = !wasCompleted && newCompleted
+        )
     }
 
     suspend fun deleteTask(id: Long): Boolean = withContext(Dispatchers.IO) {

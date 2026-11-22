@@ -8,11 +8,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.mobilelab01.navigation.TaskManagerApp
+import com.example.mobilelab01.notifications.TaskNotificationManager
 import com.example.mobilelab01.ui.theme.MobileLab01Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        TaskNotificationManager(this).ensureChannel()
         enableEdgeToEdge()
         setContent {
             MobileLab01Theme {
