@@ -150,14 +150,6 @@ fun RemoteTodosScreen(
                         contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        item {
-                            Button(
-                                onClick = onRefresh,
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Text("Обновить")
-                            }
-                        }
                         items(uiState.todos, key = { it.id }) { todo ->
                             RemoteTodoCard(todo = todo)
                         }
