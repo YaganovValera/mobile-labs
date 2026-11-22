@@ -30,7 +30,8 @@ fun HomeScreen(
     completedCount: Int,
     pendingCount: Int,
     onOpenTasks: () -> Unit,
-    onAddTask: () -> Unit
+    onAddTask: () -> Unit,
+    onOpenRemoteTasks: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -101,6 +102,12 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Добавить задачу")
+            }
+            OutlinedButton(
+                onClick = onOpenRemoteTasks,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Задачи из интернета")
             }
         }
     }
